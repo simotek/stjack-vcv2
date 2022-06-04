@@ -1,3 +1,30 @@
+2022-06-04	NielsZweiStein	<NielsZweiStein@gmail.com>
+	* Why we are forking the Skrylar VCVRACK Module for JACK Audio Sound Server ?!
+	
+	* I am an old vcv rack user who was happy to use the skrylar plugin.
+	  Only this plugin allowed me to make VCVRACK work under linux with the JACK sound server without Xruns
+	  
+	  The audio modules present in VCV rack based on RTaudio do not allow me to fully enjoy the software
+	  I noticed a deterioration (cpu) in the use of vcvrack  before the switch to version 2 of the software
+	  (tested with debian, archlinux, gentoo)
+	  
+	  The fork was made on my twitch channel live, thanks to the help of friends present in the chat
+	  (Wako, acidKevin, seg_fote, vozgot, Jaynothin..)
+	  
+	  We have debug and strace Rack2, we have noticed that the CPU consumption is abnormally high
+	  
+	  We updated the Skrylar plugin in a dirty way to satisfy and pass the necessary steps for compilation and check if we can enjoy like in the past
+	  
+	  
+	* Fork Skrylar GITHUB repository
+		https://github.com/Skrylar/skjack-vcv
+	  
+	* Issues Github 05 May 2019
+		A new maintainer for 1.0
+		#18 by Skrylar was closed on 4 Jul 2019
+		
+		
+		
 2019-02-12  Skrylar  <skrylar@Raziel>
 
 	* src/jack-audio-module-widget.cc: Audio module is now split in to
@@ -5,4 +32,3 @@
 
 	* src/jaq.cc: Input and output ports now have -in and -out
 	suffixes.
-
