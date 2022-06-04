@@ -12,7 +12,7 @@ struct JackPortLedTextField : public LedDisplayTextField {
    jack_audio_module_widget_base* master;
 
    JackPortLedTextField() : LedDisplayTextField() {
-      font = APP->window->loadFont(asset::plugin(::plugin, "res/3270Medium.ttf"));
+      //font = APP->window->loadFont(asset::plugin(::plugin, "res/3270Medium.ttf"));
    }
 
    void draw(const DrawArgs &args) override {
@@ -25,20 +25,7 @@ struct JackPortLedTextField : public LedDisplayTextField {
    	nvgFillColor(args.vg, nvgRGB(20, 39, 53));
    	nvgFill(args.vg);
 
-   	// Text
-   	if (font->handle >= 0) {
-   		bndSetFont(font->handle);
 
-   		NVGcolor highlightColor = nvgRGB(255, 255, 255);
-   		highlightColor.a = 0.5;
-   		int begin = std::min(cursor, selection);
-   		int end = (this == APP->event->selectedWidget) ? std::max(cursor, selection) : -1;
-   		bndIconLabelCaret(args.vg, textOffset.x, textOffset.y,
-   			box.size.x - 2*textOffset.x, box.size.y - 2*textOffset.y,
-   			-1, nvgRGB(255, 255, 255), 12, text.c_str(), highlightColor, begin, end);
-
-   		bndSetFont(APP->window->uiFont->handle);
-   	}
 
    	nvgResetScissor(args.vg);
 
