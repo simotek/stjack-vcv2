@@ -4,9 +4,6 @@ Connection Kit to VCV Rack.
 
 It has not been profitable to work on, so it is maintained or developed on a whim.
 
-[[https://www.ko-fi.com/V7V6RG3E][You are still free to send a tip or commission a module. ]] 
-
-[[https://www.ko-fi.com/V7V6RG3E][https://www.ko-fi.com/img/donate_sm.png]]
 
 * Modules
 ** JACK Audio
