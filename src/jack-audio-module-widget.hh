@@ -13,8 +13,8 @@ struct jack_audio_module_widget_base: public ModuleWidget {
    void on_port_renamed(int port, const std::string& name);
 
    // save and restore port names with the vcv file
-   virtual json_t *toJson() override;
-   virtual void fromJson(json_t* json) override;
+   virtual json_t *toJson();
+   virtual void fromJson(json_t* json);
 
    void assume_default_port_names();
 };
