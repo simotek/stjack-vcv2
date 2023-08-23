@@ -12,7 +12,7 @@ add_project_arguments(['-Wall', '-Wextra', '-std=c++11', '-pedantic', '-g'], lan
 add_project_link_arguments(['-ldl'], language: 'cpp')
 
 # TODO: swap this with a subproject reference once we subordinate rack to a workspace
-rack_include = include_directories('/opt/rack/include')
+rack_include = include_directories('/opt/rack/include','/opt/rack/dep/include/')
 
 shared_module('plugin', [
 'src/jack-audio-module.cc',
