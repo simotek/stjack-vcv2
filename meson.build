@@ -15,6 +15,7 @@ add_project_link_arguments(['-ldl'], language: 'cpp')
 rack_include = include_directories('/opt/rack/include','/opt/rack/dep/include/')
 
 shared_module('plugin', [
+'src/hashids.cc',
 'src/jack-audio-module.cc',
 'src/jack-audio-module-widget.cc',
 'src/skjack.cc',
