@@ -12,7 +12,6 @@ struct JackPortLedTextField : public LedDisplayTextField {
    jack_audio_module_widget_base* master;
 
    JackPortLedTextField() : LedDisplayTextField() {
-      //font = APP->window->loadFont(asset::plugin(::plugin, "res/3270Medium.ttf"));
    }
 
    void draw(const DrawArgs &args) override {
@@ -25,7 +24,8 @@ struct JackPortLedTextField : public LedDisplayTextField {
    	nvgFillColor(args.vg, nvgRGB(20, 39, 53));
    	nvgFill(args.vg);
 
-
+      // This needs to be done here, but its commented out because the rest of the code doesn't work
+      //std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(::plugin, "res/3270Medium.ttf"));
 
    	nvgResetScissor(args.vg);
 
