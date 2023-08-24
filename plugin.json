@@ -1,7 +1,7 @@
 {
-  "slug": "StJack",
-  "name": "StJack",
-  "brand": "Simotek",
+  "slug": "StkJack",
+  "name": "StkJack",
+  "brand": "StkEuro",
   "version": "2.7.0",
   "license": "GPL-3.0",
   "author": "Simotek",
@@ -12,25 +12,25 @@
   "sourceUrl": "https://github.com/Simotek/stjack-vcv",
   "modules": [
     {
-      "slug": "JackAudio",
-      "name": "JACK Audio",
+      "slug": "JackAndRack",
+      "name": "Jack And Rack",
       "description": "Four named input and output JACK ports.",
       "tags": [
         "external"
       ]
     },
     {
-      "slug": "JackAudioOut8",
-      "name": "JACK Audio (8 Rack->JACK)",
-      "description": "Eight named JACK output ports.",
+      "slug": "RackJack8",
+      "name": "Rack Jack 8 (8 Rack->JACK)",
+      "description": "Eight named ports sending Rack audio to Jack.",
       "tags": [
         "external"
       ]
     },
     {
-      "slug": "JackAudioIn8",
-      "name": "JACK Audio (8 JACK->RACK)",
-      "description": "Eight named JACK input ports.",
+      "slug": "JackRack8",
+      "name": "Jack Rack 8 (8 JACK->RACK)",
+      "description": "Eight named ports sending Jack audio to Rack.",
       "tags": [
         "external"
       ]
