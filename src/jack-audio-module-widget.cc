@@ -67,13 +67,28 @@ void jack_audio_module_widget_base::assume_default_port_names() {
    char port_name[buffer_size];
    hashidsxx::Hashids hash(g_hashid_salt);
    std::string id = hash.encode(reinterpret_cast<size_t>(module));
+   auto mod = reinterpret_cast<JackAudioModule*>(module);
+
 
    for (int i = 0; i < JACK_PORTS; i++) {
-      snprintf(reinterpret_cast<char*>(&port_name),
-	       buffer_size,
-	       "%s:%d", id.c_str(), i);
-      // XXX using setText here would cause crashes because it would try to tell
-      port_names[i]->text = std::string(port_name);
+      bool done = false;
+      if (mod) {
+         if (!mod->port_names[i].empty()) {
+            snprintf(reinterpret_cast<char*>(&port_name),
+             buffer_size,
+             "%s", mod->port_names[i].c_str());
+            // XXX using setText here would cause crashes because it would try to tell
+            port_names[i]->text = std::string(port_name);
+            done = true;
+         }
+      }
+      if (!done) {
+         snprintf(reinterpret_cast<char*>(&port_name),
+          buffer_size,
+          "%s:%d", id.c_str(), i);
+         // XXX using setText here would cause crashes because it would try to tell
+         port_names[i]->text = std::string(port_name);
+      }
    }
 }
 
@@ -214,44 +229,6 @@ JackAudioModuleWidget::~JackAudioModuleWidget() {}
 jack_audio_out8_module_widget::~jack_audio_out8_module_widget() {}
 jack_audio_in8_module_widget::~jack_audio_in8_module_widget() {}
 
-json_t* jack_audio_module_widget_base::toJson() {
-   auto map = ModuleWidget::toJson();
-   auto port_names = json_array();
-
-   for (int i = 0; i < JACK_PORTS; i++) {
-      auto str = json_string(this->port_names[i]->text.c_str());
-      json_array_append_new(port_names, str);
-   }
-
-   json_object_set_new(map, "port_names", port_names);
-   return map;
-}
-
-void jack_audio_module_widget_base::fromJson(json_t* json) {
-   auto module = reinterpret_cast<JackAudioModule*>(this->module);
-   auto port_names = json_object_get(json, "port_names");
-   if (json_is_array(port_names)) {
-      for (size_t i = 0; i < std::min(json_array_size(port_names), (size_t)8); i++) {
-	 auto item = json_array_get(port_names, i);
-	 if (json_is_string(item)) {
-	    if (module->jport[i].rename(json_string_value(item))) {
-	       this->port_names[i]->text = std::string(json_string_value(item));
-	    } else {
-	       static const size_t buffer_size = 128;
-	       char port_name[buffer_size];
-	       hashidsxx::Hashids hash(g_hashid_salt);
-	       std::string id = hash.encode(reinterpret_cast<size_t>(module));
-
-	       snprintf(reinterpret_cast<char*>(&port_name),
-			buffer_size,
-			"%s:%d", id.c_str(), (int)i);
-	       this->port_names[i]->setText(std::string(port_name));
-	    }
-	 }
-      }
-   }
-}
-
 void jack_audio_module_widget_base::on_port_renamed(int port, const std::string& name) {
    if (port < 0 || port > JACK_PORTS) return;
    if (!g_jack_client.alive()) return;
@@ -265,6 +242,7 @@ void jack_audio_module_widget_base::on_port_renamed(int port, const std::string&
      DEBUG("Changing port name failed");
      //port_names[port]->setText(std::string(jack_port_short_name(module->jport[port])));
    }
+   module->port_names[port] = name;
 }
 
 // Specify the Module and ModuleWidget subclass, human-readable

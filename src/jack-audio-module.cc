@@ -109,6 +109,44 @@ void jack_audio_module_base::assign_stupid_port_names() {
    }
 }
 
+json_t* jack_audio_module_base::toJson() {
+   auto map = Module::toJson();
+   auto pt_names = json_array();
+
+   for (int i = 0; i < JACK_PORTS; i++) {
+      auto str = json_string(this->port_names[i].c_str());
+      json_array_append_new(pt_names, str);
+   }
+
+   json_object_set_new(map, "port_names", pt_names);
+   return map;
+}
+
+void jack_audio_module_base::fromJson(json_t* json) {
+   auto module = reinterpret_cast<JackAudioModule*>(this);
+   auto pt_names = json_object_get(json, "port_names");
+   if (json_is_array(pt_names)) {
+      for (size_t i = 0; i < std::min(json_array_size(pt_names), (size_t)8); i++) {
+    auto item = json_array_get(pt_names, i);
+    if (json_is_string(item)) {
+       if (module->jport[i].rename(json_string_value(item))) {
+          this->port_names[i] = std::string(json_string_value(item));
+       } else {
+          static const size_t buffer_size = 128;
+          char port_name[buffer_size];
+          hashidsxx::Hashids hash(g_hashid_salt);
+          std::string id = hash.encode(reinterpret_cast<size_t>(module));
+
+          snprintf(reinterpret_cast<char*>(&port_name),
+         buffer_size,
+         "%s:%d", id.c_str(), (int)i);
+          this->port_names[i] = std::string(port_name);
+       }
+    }
+      }
+   }
+}
+
 JackAudioModule::JackAudioModule()
    : jack_audio_module_base(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS)
 {

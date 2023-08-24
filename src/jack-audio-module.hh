@@ -35,12 +35,17 @@ struct jack_audio_module_base: public Module {
    std::mutex jmutex;
    jaq::port jport[JACK_PORTS];
 
+   std::string port_names[8];
+
    void wipe_buffers();
    void globally_register();
    void globally_unregister();
    void assign_stupid_port_names();
 
    void report_backlogged();
+
+   virtual json_t* toJson() override;
+   virtual void fromJson(json_t* json) override;
 
    jack_audio_module_base(size_t params, size_t inputs,
 			  size_t outputs, size_t lights);
