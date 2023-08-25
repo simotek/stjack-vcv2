@@ -34,6 +34,7 @@ namespace jaq {
    bool port::register_audio(client& mom, const char* name, unsigned long flags) {
       if (!mom.alive()) return false;
       this->mom = &mom;
+      m_flags = flags;
 
       m_output = (flags & JackPortIsOutput) > 0;
 
@@ -56,7 +57,7 @@ namespace jaq {
 	     "%s-%s",
 	     name,		       // desired port name
 	     m_output ? "out" : "in"); // idiomatic suffix
-
+       DEBUG("Registering : %s", name);
 	 handle = client::x_jack_port_register(
 	    mom.handle,
 	    name,
@@ -65,8 +66,9 @@ namespace jaq {
 	    0);
       } else return false;
 
-      if (handle) return true;
-
+      if (handle) {
+        return true;
+      }
       else {
 	 this->mom = 0;
 	 return false;
@@ -77,8 +79,8 @@ namespace jaq {
       return m_output;
    }
 
-   bool port::rename(const std::string& new_name) {
-      if (!alive()) return false;
+   int port::rename(const std::string& new_name) {
+      if (!alive()) return -99;
 
       static const size_t buffer_size = 256;
       char port_name[buffer_size];
@@ -87,21 +89,39 @@ namespace jaq {
 	  buffer_size,
 	  "%s:%s-%s",
 	  client::x_jack_get_client_name(mom->handle),
-	  new_name.c_str(),	    // desired port name
+	  new_name.c_str(),	    // current port name
 	  m_output ? "out" : "in"); // idiomatic suffix
-
+      DEBUG("Port by name: %s", port_name);
       auto x = client::x_jack_port_by_name(mom->handle, port_name);
+      DEBUG("x: %d", x);
       if (x == NULL) {
-	 snprintf
-	    (reinterpret_cast<char*>(&port_name),
-	     buffer_size,
-	     "%s-%s",
-	     new_name.c_str(),	    // desired port name
-	     m_output ? "out" : "in"); // idiomatic suffix
-	 return client::x_jack_port_rename(mom->handle, handle, port_name) == 0;
+   	  snprintf
+   	    (reinterpret_cast<char*>(&port_name),
+   	     buffer_size,
+   	     "%s-%s",
+   	     new_name.c_str(),	    // desired port name
+   	     m_output ? "out" : "in"); // idiomatic suffix
+        //DEBUG("Rename %s", new_name.c_str());
+        // Rename isn't working for reasons I don't understand.
+	     //int ret = client::x_jack_port_rename(mom->handle, handle, new_name.c_str());
+        //return ret;
+        DEBUG("Recreate %s", new_name.c_str());
+        client::x_jack_port_unregister(mom->handle, handle);
+        handle = client::x_jack_port_register(
+           mom->handle,
+           new_name.c_str(),
+           JACK_DEFAULT_AUDIO_TYPE,
+           m_flags,
+           0);
+        DEBUG("  Result %d", handle == NULL);
+        if (handle == NULL) {
+         return -98;
+        } else {
+         return 0;
+        }
       }
-      else
-	 return false;
+      else 
+	 return -98; // Make this obvious
    }
 
    void port::unregister() {

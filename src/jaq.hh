@@ -67,6 +67,9 @@ namespace jaq {
     jack_port_t* handle;
 
     bool m_output;
+    unsigned long m_flags;
+
+    //std::string m_current_name;
 
     port() : mom(0), handle(0) {}
 
@@ -88,7 +91,7 @@ namespace jaq {
       return NULL;
     }
 
-    bool rename(const std::string& new_name);
+    int rename(const std::string& new_name);
 
   private:
     port(const port&) {/*don't ocopy that floppy*/}

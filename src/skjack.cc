@@ -46,12 +46,19 @@ int on_jack_process(jack_nframes_t nframes, void *) {
 	       for (jack_nframes_t i = 0; i < nframes; i++) {
 		  dsp::Frame<AUDIO_OUTPUTS> output_frame = module->jack_output_buffer.shift();
 		  for (int j = 0; j < AUDIO_OUTPUTS; j++) {
-		     jack_buffer[j][i] = output_frame.samples[j];
+		  	  if (jack_buffer[j] != NULL) {
+		       jack_buffer[j][i] = output_frame.samples[j];
+		    }
 		  }
 
 		  dsp::Frame<AUDIO_INPUTS> input_frame;
 		  for (int j = 0; j < AUDIO_INPUTS; j++) {
-		     input_frame.samples[j] = jack_buffer[j+AUDIO_OUTPUTS][i];
+
+		     if (jack_buffer[j+AUDIO_OUTPUTS] == NULL) {
+		     	 input_frame.samples[j] = 0.0;
+		     } else {
+		       input_frame.samples[j] = jack_buffer[j+AUDIO_OUTPUTS][i];
+		     }
 		  }
 		  module->jack_input_buffer.push(input_frame);
 	       }
@@ -108,7 +115,12 @@ int on_jack_process(jack_nframes_t nframes, void *) {
 		       j < AUDIO_OUTPUTS;
 		       j++)
 		  {
-		     output_frame.samples[j] = jack_buffer[j][i];
+		  	  // jack_buffer maybe null during rename
+		  	  if (jack_buffer[j] == NULL) {
+		  	  	 output_frame.samples[j] = 0.0;
+		  	  } else {
+		       output_frame.samples[j] = jack_buffer[j][i];
+		    }
 		  }
 		  module->jack_output_buffer.push(output_frame);
 
@@ -117,7 +129,11 @@ int on_jack_process(jack_nframes_t nframes, void *) {
 		       j < AUDIO_INPUTS;
 		       j++)
 		  {
-		     input_frame.samples[j] = jack_buffer[j+AUDIO_OUTPUTS][i];
+		  	  if (jack_buffer[j+AUDIO_OUTPUTS] == NULL) {
+		  	  	 output_frame.samples[j] = 0.0;
+		  	  } else {
+		       input_frame.samples[j] = jack_buffer[j+AUDIO_OUTPUTS][i];
+		    }
 		  }
 		  module->jack_input_buffer.push(input_frame);
 	       }

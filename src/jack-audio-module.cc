@@ -129,17 +129,20 @@ void jack_audio_module_base::fromJson(json_t* json) {
       for (size_t i = 0; i < std::min(json_array_size(pt_names), (size_t)8); i++) {
     auto item = json_array_get(pt_names, i);
     if (json_is_string(item)) {
-       if (module->jport[i].rename(json_string_value(item))) {
-          this->port_names[i] = std::string(json_string_value(item));
+       int error = module->jport[i].rename(json_string_value(item));
+       if (error == 0) {
+           DEBUG("Changing port name to %s successful",this->port_names[i].c_str());
+           this->port_names[i] = std::string(json_string_value(item));
        } else {
-          static const size_t buffer_size = 128;
-          char port_name[buffer_size];
-          hashidsxx::Hashids hash(g_hashid_salt);
-          std::string id = hash.encode(reinterpret_cast<size_t>(module));
+           DEBUG("Changing port name failed: %s, %d", json_string_value(item), error);
+           static const size_t buffer_size = 128;
+           char port_name[buffer_size];
+           hashidsxx::Hashids hash(g_hashid_salt);
+           std::string id = hash.encode(reinterpret_cast<size_t>(module));
 
-          snprintf(reinterpret_cast<char*>(&port_name),
-         buffer_size,
-         "%s:%d", id.c_str(), (int)i);
+           snprintf(reinterpret_cast<char*>(&port_name),
+             buffer_size,
+             "%s:%d", id.c_str(), (int)i);
           this->port_names[i] = std::string(port_name);
        }
     }

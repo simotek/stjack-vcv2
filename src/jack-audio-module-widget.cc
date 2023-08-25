@@ -31,9 +31,11 @@ struct JackPortLedTextField : public LedDisplayTextField {
 
    }
 
-   void onChange(const event::Change &e) override {
-      LedDisplayTextField::onChange(e);
-      master->on_port_renamed(managed_port, text);
+   void onDeselect (const DeselectEvent &e) override {
+      std::string t = getText();
+
+      LedDisplayTextField::onDeselect(e);
+      master->on_port_renamed(managed_port, getText());
    }
 };
 
@@ -230,16 +232,21 @@ jack_audio_out8_module_widget::~jack_audio_out8_module_widget() {}
 jack_audio_in8_module_widget::~jack_audio_in8_module_widget() {}
 
 void jack_audio_module_widget_base::on_port_renamed(int port, const std::string& name) {
+   DEBUG("Renaming port: %d, %s", port, name.c_str());
    if (port < 0 || port > JACK_PORTS) return;
    if (!g_jack_client.alive()) return;
    auto module = reinterpret_cast<JackAudioModule*>(this->module);
    if (!module) return;
 
+   // Port name might already be set now we use deselect events
+   if (name == module->port_names[port]) return;
+
    // XXX port names must be unique per client; using a non-unique name here
    // doesn't appear to "fail" but you do get a port with a blank name.
-   if (!module->jport[port].rename(name)) {
+   int error = module->jport[port].rename(name);
+   if (error != 0) {
      // warning was broken in 0.6->1.0
-     DEBUG("Changing port name failed");
+     DEBUG("Changing port name failed: %s, %d", name.c_str(), error);
      //port_names[port]->setText(std::string(jack_port_short_name(module->jport[port])));
    }
    module->port_names[port] = name;
