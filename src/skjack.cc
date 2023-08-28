@@ -85,11 +85,15 @@ int on_jack_process(jack_nframes_t nframes, void *) {
 		     module->jack_input_buffer.shift();
 
 		  for (int j = 0; j < AUDIO_OUTPUTS; j++) {
-		     jack_buffer[j][i] = output_frame.samples[j];
+		  	   if (jack_buffer[j] != NULL) {
+		        jack_buffer[j][i] = output_frame.samples[j];
+		      }
 		  }
 
 		  for (int j = 0; j < AUDIO_INPUTS; j++) {
-		     jack_buffer[j+AUDIO_OUTPUTS][i] = input_frame.samples[j];
+		  	  if (jack_buffer[j+AUDIO_OUTPUTS] != NULL) {
+		       jack_buffer[j+AUDIO_OUTPUTS][i] = input_frame.samples[j];
+		      }
 		  }
 	       }
 

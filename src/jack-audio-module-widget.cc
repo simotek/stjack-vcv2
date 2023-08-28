@@ -21,7 +21,7 @@ struct JackPortLedTextField : public LedDisplayTextField {
    	// Background
    	nvgBeginPath(args.vg);
    	nvgRoundedRect(args.vg, 0, 0, box.size.x, box.size.y, 5.0);
-   	nvgFillColor(args.vg, nvgRGB(20, 39, 53));
+   	nvgFillColor(args.vg, nvgRGBA(20, 20, 20, 0xcc));
    	nvgFill(args.vg);
 
       // This needs to be done here, but its commented out because the rest of the code doesn't work
@@ -45,13 +45,26 @@ jack_audio_module_widget_base::jack_audio_module_widget_base
 {
 }
 
-#define def_port_label(id, x, y) {					\
+#define def_port_label_out(id, x, y) {					\
    port_names[id] = createWidget<JackPortLedTextField>(mm2px(Vec(x, y))); \
    auto self = reinterpret_cast<JackPortLedTextField*>(port_names[id]);	\
    self->managed_port = id;						\
    self->master = this;							\
    self->box.size = mm2px(Vec(35.0, 10.753));				\
+   self->color = nvgRGB(0x02,0x7b,0x35);           \
+   self->fontPath = asset::system("res/fonts/Nunito-Bold.ttf");           \
    addChild(self);							\
+}
+
+#define def_port_label_in(id, x, y) {             \
+   port_names[id] = createWidget<JackPortLedTextField>(mm2px(Vec(x, y))); \
+   auto self = reinterpret_cast<JackPortLedTextField*>(port_names[id]); \
+   self->managed_port = id;                  \
+   self->master = this;                   \
+   self->box.size = mm2px(Vec(35.0, 10.753));            \
+   self->color = nvgRGB(0x8e,0x44, 0xad);           \
+   self->fontPath = asset::system("res/fonts/Nunito-Bold.ttf");           \
+   addChild(self);                     \
 }
 
 #define def_input(self, id, x, y) addInput				\
@@ -99,13 +112,13 @@ JackAudioModuleWidget::JackAudioModuleWidget(JackAudioModule* module)
 {
    setPanel(APP->window->loadSvg(asset::plugin(::plugin, "res/JackAudioB.svg")));
 
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH,
 		 RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
@@ -118,21 +131,21 @@ JackAudioModuleWidget::JackAudioModuleWidget(JackAudioModule* module)
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
      ]]] */
    def_input(JackAudioModule, 0, 3.706, 10.530807);
-   def_port_label(0, 13.7069211, 8.530807);
+   def_port_label_in(0, 13.7069211, 8.530807);
    def_input(JackAudioModule, 1, 3.706, 23.530807);
-   def_port_label(1, 13.7069211, 21.530807);
+   def_port_label_in(1, 13.7069211, 21.530807);
    def_input(JackAudioModule, 2, 3.706, 36.530806999999996);
-   def_port_label(2, 13.7069211, 34.530806999999996);
+   def_port_label_in(2, 13.7069211, 34.530806999999996);
    def_input(JackAudioModule, 3, 3.706, 49.530806999999996);
-   def_port_label(3, 13.7069211, 47.530806999999996);
+   def_port_label_in(3, 13.7069211, 47.530806999999996);
    def_output(JackAudioModule, 0, 3.706, 62.530806999999996);
-   def_port_label(4, 13.7069211, 60.530806999999996);
+   def_port_label_out(4, 13.7069211, 60.530806999999996);
    def_output(JackAudioModule, 1, 3.706, 75.530807);
-   def_port_label(5, 13.7069211, 73.530807);
+   def_port_label_out(5, 13.7069211, 73.530807);
    def_output(JackAudioModule, 2, 3.706, 88.530807);
-   def_port_label(6, 13.7069211, 86.530807);
+   def_port_label_out(6, 13.7069211, 86.530807);
    def_output(JackAudioModule, 3, 3.706, 101.530807);
-   def_port_label(7, 13.7069211, 99.530807);
+   def_port_label_out(7, 13.7069211, 99.530807);
    //[[[end]]]
 
    assume_default_port_names();
@@ -144,13 +157,13 @@ jack_audio_out8_module_widget::jack_audio_out8_module_widget
 {
    setPanel(APP->window->loadSvg(asset::plugin(::plugin, "res/JackAudioB-8out.svg")));
 
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH,
 		 RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
@@ -160,21 +173,21 @@ jack_audio_out8_module_widget::jack_audio_out8_module_widget
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
      ]]] */
    def_input(jack_audio_out8_module, 0, 3.7069211, 10.530807);
-   def_port_label(0, 13.7069211, 8.530807);
+   def_port_label_in(0, 13.7069211, 8.530807);
    def_input(jack_audio_out8_module, 1, 3.7069211, 23.530807);
-   def_port_label(1, 13.7069211, 21.530807);
+   def_port_label_in(1, 13.7069211, 21.530807);
    def_input(jack_audio_out8_module, 2, 3.7069211, 36.530806999999996);
-   def_port_label(2, 13.7069211, 34.530806999999996);
+   def_port_label_in(2, 13.7069211, 34.530806999999996);
    def_input(jack_audio_out8_module, 3, 3.7069211, 49.530806999999996);
-   def_port_label(3, 13.7069211, 47.530806999999996);
+   def_port_label_in(3, 13.7069211, 47.530806999999996);
    def_input(jack_audio_out8_module, 4, 3.7069211, 62.530806999999996);
-   def_port_label(4, 13.7069211, 60.530806999999996);
+   def_port_label_in(4, 13.7069211, 60.530806999999996);
    def_input(jack_audio_out8_module, 5, 3.7069211, 75.530807);
-   def_port_label(5, 13.7069211, 73.530807);
+   def_port_label_in(5, 13.7069211, 73.530807);
    def_input(jack_audio_out8_module, 6, 3.7069211, 88.530807);
-   def_port_label(6, 13.7069211, 86.530807);
+   def_port_label_in(6, 13.7069211, 86.530807);
    def_input(jack_audio_out8_module, 7, 3.7069211, 101.530807);
-   def_port_label(7, 13.7069211, 99.530807);
+   def_port_label_in(7, 13.7069211, 99.530807);
    //[[[end]]]
 
    assume_default_port_names();
@@ -186,13 +199,13 @@ jack_audio_in8_module_widget::jack_audio_in8_module_widget
 {
    setPanel(APP->window->loadSvg(asset::plugin(::plugin, "res/JackAudioB-8in.svg")));
 
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-   addChild(createWidget<ScrewSilver>
+   addChild(createWidget<ThemedScrew>
 	    (Vec(box.size.x - 2 * RACK_GRID_WIDTH,
 		 RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
@@ -202,21 +215,21 @@ jack_audio_in8_module_widget::jack_audio_in8_module_widget
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
        ]]] */
    def_output(jack_audio_in8_module, 0, 3.7069211, 10.530807);
-   def_port_label(0, 13.7069211, 8.530807);
+   def_port_label_out(0, 13.7069211, 8.530807);
    def_output(jack_audio_in8_module, 1, 3.7069211, 23.530807);
-   def_port_label(1, 13.7069211, 21.530807);
+   def_port_label_out(1, 13.7069211, 21.530807);
    def_output(jack_audio_in8_module, 2, 3.7069211, 36.530806999999996);
-   def_port_label(2, 13.7069211, 34.530806999999996);
+   def_port_label_out(2, 13.7069211, 34.530806999999996);
    def_output(jack_audio_in8_module, 3, 3.7069211, 49.530806999999996);
-   def_port_label(3, 13.7069211, 47.530806999999996);
+   def_port_label_out(3, 13.7069211, 47.530806999999996);
    def_output(jack_audio_in8_module, 4, 3.7069211, 62.530806999999996);
-   def_port_label(4, 13.7069211, 60.530806999999996);
+   def_port_label_out(4, 13.7069211, 60.530806999999996);
    def_output(jack_audio_in8_module, 5, 3.7069211, 75.530807);
-   def_port_label(5, 13.7069211, 73.530807);
+   def_port_label_out(5, 13.7069211, 73.530807);
    def_output(jack_audio_in8_module, 6, 3.7069211, 88.530807);
-   def_port_label(6, 13.7069211, 86.530807);
+   def_port_label_out(6, 13.7069211, 86.530807);
    def_output(jack_audio_in8_module, 7, 3.7069211, 101.530807);
-   def_port_label(7, 13.7069211, 99.530807);
+   def_port_label_out(7, 13.7069211, 99.530807);
    //[[[end]]]
 
    assume_default_port_names();

@@ -2,14 +2,17 @@
 This plugin aims to bring first class support for the JACK Audio
 Connection Kit to VCV Rack.
 
-It has not been profitable to work on, so it is maintained or developed on a whim.
+This is a port of [[https://github.com/Skrylar][Skrylar]]'s JACK Audio to VCV Rack 2 with some added UX enhancements
 
+* Known Issues
+- Currently we create new ports instead of renaming them, as I rename everything first it's not a huge issue for me [[https://github.com/simotek/stjack-vcv2/issues/1]]
+- Currently input and output ports with the same name is broken again. [[https://github.com/simotek/stjack-vcv2/issues/2]]
 
 * Modules
-** JACK Audio
+** JackAndRack
 
 #+CAPTION: Annotated image of the JACK Audio module.
-[[doc/module-fs8.png]]
+[[doc/all_modules.jpg]]
 
  - There are four input and four output ports.
  - Output ports are marked with an off-color accent.
@@ -18,7 +21,7 @@ It has not been profitable to work on, so it is maintained or developed on a whi
 *** Four ports is not enough for me!
 You have some options:
 
- 1) Just add another =JACK Audio=. Seriously.
+ 1) Just add another =JackAndRack=. Seriously.
  2) Add one of the special 8 inbound or outbound modules.
 
 JACK modules are designed to cooperate with one another. They will
@@ -26,11 +29,11 @@ feed audio to JACK or to Rack and only one of them will block Rack
 while waiting for audio to be processed. You can consult the power
 meter for proof.
 
-** 8 RACK->JACK
-This is the same as a =JACK Audio= excepting all ports output to JACK.
+** RackJack8
+This is the same as a =JackAndRack= excepting all ports output to JACK.
 
-** 8 JACK->RACK
-This is the same as a =JACK Audio= excepting all ports output to Rack.
+** JackRack8
+This is the same as a =JackAndRack= excepting all ports output to Rack.
 
 * JACK Quirks
 
@@ -100,13 +103,9 @@ instance with a functioning JACK server.
 * Licenses and Credits
 
 ** Graphics
-The module graphics template was designed by github user
-[[https://github.com/infamedavid][@infamedavid (David Rodriguez)]], and are available via CC-BY.
+The panel graphics in the res directory is licensed under CC BY-NC-ND 4.0. You may not create modified adaptations of these graphics.
 
-** 3270 Font
-The [[https://github.com/rbanffy/3270font][3270 terminal font]] is used under the BSD-3 license.
-
-** SkJACK
+** StJACK
 This plugin is made available under GPL3.
 
 Previous versions were available under the BSD license. As Rack itself is no longer available under those terms, and we incorporate code from that project, this is no longer the case.
