@@ -130,22 +130,22 @@ JackAudioModuleWidget::JackAudioModuleWidget(JackAudioModule* module)
          cog.outl('def_output(JackAudioModule, {}, 3.706, {});'.format(i % 4, 10.530807 + (i * 13)))
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
      ]]] */
-   def_input(JackAudioModule, 0, 3.706, 10.530807);
-   def_port_label_in(0, 13.7069211, 8.530807);
-   def_input(JackAudioModule, 1, 3.706, 23.530807);
-   def_port_label_in(1, 13.7069211, 21.530807);
-   def_input(JackAudioModule, 2, 3.706, 36.530806999999996);
-   def_port_label_in(2, 13.7069211, 34.530806999999996);
-   def_input(JackAudioModule, 3, 3.706, 49.530806999999996);
-   def_port_label_in(3, 13.7069211, 47.530806999999996);
-   def_output(JackAudioModule, 0, 3.706, 62.530806999999996);
-   def_port_label_out(4, 13.7069211, 60.530806999999996);
-   def_output(JackAudioModule, 1, 3.706, 75.530807);
-   def_port_label_out(5, 13.7069211, 73.530807);
-   def_output(JackAudioModule, 2, 3.706, 88.530807);
-   def_port_label_out(6, 13.7069211, 86.530807);
-   def_output(JackAudioModule, 3, 3.706, 101.530807);
-   def_port_label_out(7, 13.7069211, 99.530807);
+   def_input(JackAudioModule, 0, 40.069211, 11.730807);
+   def_port_label_in(0, 2.7069211, 10.530807);
+   def_input(JackAudioModule, 1, 40.069211, 24.730807);
+   def_port_label_in(1, 2.7069211, 23.530807);
+   def_input(JackAudioModule, 2, 40.069211, 37.730806999999996);
+   def_port_label_in(2, 2.7069211, 36.530806999999996);
+   def_input(JackAudioModule, 3, 40.069211, 50.730806999999996);
+   def_port_label_in(3, 2.7069211, 49.530806999999996);
+   def_output(JackAudioModule, 0, 40.069211, 63.730806999999996);
+   def_port_label_out(4, 2.7069211, 62.530806999999996);
+   def_output(JackAudioModule, 1, 40.069211, 76.730807);
+   def_port_label_out(5, 2.7069211, 75.530807);
+   def_output(JackAudioModule, 2, 40.069211, 89.730807);
+   def_port_label_out(6, 2.7069211, 88.530807);
+   def_output(JackAudioModule, 3, 40.069211, 102.730807);
+   def_port_label_out(7, 2.7069211, 101.530807);
    //[[[end]]]
 
    assume_default_port_names();
@@ -172,22 +172,22 @@ jack_audio_out8_module_widget::jack_audio_out8_module_widget
        cog.outl('def_input(jack_audio_out8_module, {}, 3.7069211, {});'.format(i, 10.530807 + (13 * i)))
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
      ]]] */
-   def_input(jack_audio_out8_module, 0, 3.7069211, 10.530807);
-   def_port_label_in(0, 13.7069211, 8.530807);
-   def_input(jack_audio_out8_module, 1, 3.7069211, 23.530807);
-   def_port_label_in(1, 13.7069211, 21.530807);
-   def_input(jack_audio_out8_module, 2, 3.7069211, 36.530806999999996);
-   def_port_label_in(2, 13.7069211, 34.530806999999996);
-   def_input(jack_audio_out8_module, 3, 3.7069211, 49.530806999999996);
-   def_port_label_in(3, 13.7069211, 47.530806999999996);
-   def_input(jack_audio_out8_module, 4, 3.7069211, 62.530806999999996);
-   def_port_label_in(4, 13.7069211, 60.530806999999996);
-   def_input(jack_audio_out8_module, 5, 3.7069211, 75.530807);
-   def_port_label_in(5, 13.7069211, 73.530807);
-   def_input(jack_audio_out8_module, 6, 3.7069211, 88.530807);
-   def_port_label_in(6, 13.7069211, 86.530807);
-   def_input(jack_audio_out8_module, 7, 3.7069211, 101.530807);
-   def_port_label_in(7, 13.7069211, 99.530807);
+   def_input(jack_audio_out8_module, 0, 2.7069211, 11.730807);
+   def_port_label_in(0, 12.7069211, 10.530807);
+   def_input(jack_audio_out8_module, 1, 2.7069211, 24.730807);
+   def_port_label_in(1, 12.7069211, 23.530807);
+   def_input(jack_audio_out8_module, 2, 2.7069211, 37.730806999999996);
+   def_port_label_in(2, 12.7069211, 36.530806999999996);
+   def_input(jack_audio_out8_module, 3, 2.7069211, 49.730806999999996);
+   def_port_label_in(3, 12.7069211, 49.530806999999996);
+   def_input(jack_audio_out8_module, 4, 2.7069211, 63.730806999999996);
+   def_port_label_in(4, 12.7069211, 62.530806999999996);
+   def_input(jack_audio_out8_module, 5, 2.7069211, 76.730807);
+   def_port_label_in(5, 12.7069211, 75.530807);
+   def_input(jack_audio_out8_module, 6, 2.7069211, 89.730807);
+   def_port_label_in(6, 12.7069211, 88.530807);
+   def_input(jack_audio_out8_module, 7, 2.7069211, 102.730807);
+   def_port_label_in(7, 12.7069211, 101.530807);
    //[[[end]]]
 
    assume_default_port_names();
@@ -214,22 +214,22 @@ jack_audio_in8_module_widget::jack_audio_in8_module_widget
        cog.outl('def_output(jack_audio_in8_module, {}, 3.7069211, {});'.format(i, 10.530807 + (13 * i)))
        cog.outl('def_port_label({}, 13.7069211, {});'.format(i, 8.530807 + (i * 13)))
        ]]] */
-   def_output(jack_audio_in8_module, 0, 3.7069211, 10.530807);
-   def_port_label_out(0, 13.7069211, 8.530807);
-   def_output(jack_audio_in8_module, 1, 3.7069211, 23.530807);
-   def_port_label_out(1, 13.7069211, 21.530807);
-   def_output(jack_audio_in8_module, 2, 3.7069211, 36.530806999999996);
-   def_port_label_out(2, 13.7069211, 34.530806999999996);
-   def_output(jack_audio_in8_module, 3, 3.7069211, 49.530806999999996);
-   def_port_label_out(3, 13.7069211, 47.530806999999996);
-   def_output(jack_audio_in8_module, 4, 3.7069211, 62.530806999999996);
-   def_port_label_out(4, 13.7069211, 60.530806999999996);
-   def_output(jack_audio_in8_module, 5, 3.7069211, 75.530807);
-   def_port_label_out(5, 13.7069211, 73.530807);
-   def_output(jack_audio_in8_module, 6, 3.7069211, 88.530807);
-   def_port_label_out(6, 13.7069211, 86.530807);
-   def_output(jack_audio_in8_module, 7, 3.7069211, 101.530807);
-   def_port_label_out(7, 13.7069211, 99.530807);
+   def_output(jack_audio_in8_module, 0, 40.069211, 11.730807);
+   def_port_label_out(0, 2.7069211, 10.530807);
+   def_output(jack_audio_in8_module, 1, 40.069211, 24.730807);
+   def_port_label_out(1, 2.7069211, 23.530807);
+   def_output(jack_audio_in8_module, 2, 40.069211, 37.730806999999996);
+   def_port_label_out(2, 2.7069211, 36.530806999999996);
+   def_output(jack_audio_in8_module, 3, 40.069211, 49.730806999999996);
+   def_port_label_out(3, 2.7069211, 49.530806999999996);
+   def_output(jack_audio_in8_module, 4, 40.069211, 63.730806999999996);
+   def_port_label_out(4, 2.7069211, 62.530806999999996);
+   def_output(jack_audio_in8_module, 5, 40.069211, 76.730807);
+   def_port_label_out(5, 2.7069211, 75.530807);
+   def_output(jack_audio_in8_module, 6, 40.069211, 89.730807);
+   def_port_label_out(6, 2.7069211, 88.530807);
+   def_output(jack_audio_in8_module, 7, 40.069211, 102.730807);
+   def_port_label_out(7, 2.7069211, 101.530807);
    //[[[end]]]
 
    assume_default_port_names();
