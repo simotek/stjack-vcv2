@@ -6,7 +6,6 @@ This is a port of [[https://github.com/Skrylar][Skrylar]]'s JACK Audio to VCV Ra
 
 * Known Issues
 - Currently we create new ports instead of renaming them, as I rename everything first it's not a huge issue for me [[https://github.com/simotek/stjack-vcv2/issues/1]]
-- Currently input and output ports with the same name is broken again. [[https://github.com/simotek/stjack-vcv2/issues/2]]
 
 * Modules
 ** JackAndRack

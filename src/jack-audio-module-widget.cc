@@ -245,7 +245,6 @@ jack_audio_out8_module_widget::~jack_audio_out8_module_widget() {}
 jack_audio_in8_module_widget::~jack_audio_in8_module_widget() {}
 
 void jack_audio_module_widget_base::on_port_renamed(int port, const std::string& name) {
-   DEBUG("Renaming port: %d, %s", port, name.c_str());
    if (port < 0 || port > JACK_PORTS) return;
    if (!g_jack_client.alive()) return;
    auto module = reinterpret_cast<JackAudioModule*>(this->module);

@@ -91,9 +91,7 @@ namespace jaq {
 	  client::x_jack_get_client_name(mom->handle),
 	  new_name.c_str(),	    // current port name
 	  m_output ? "out" : "in"); // idiomatic suffix
-      DEBUG("Port by name: %s", port_name);
       auto x = client::x_jack_port_by_name(mom->handle, port_name);
-      DEBUG("x: %d", x);
       if (x == NULL) {
    	  snprintf
    	    (reinterpret_cast<char*>(&port_name),
@@ -105,15 +103,13 @@ namespace jaq {
         // Rename isn't working for reasons I don't understand.
 	     //int ret = client::x_jack_port_rename(mom->handle, handle, new_name.c_str());
         //return ret;
-        DEBUG("Recreate %s", new_name.c_str());
         client::x_jack_port_unregister(mom->handle, handle);
         handle = client::x_jack_port_register(
            mom->handle,
-           new_name.c_str(),
+           port_name,
            JACK_DEFAULT_AUDIO_TYPE,
            m_flags,
            0);
-        DEBUG("  Result %d", handle == NULL);
         if (handle == NULL) {
          return -98;
         } else {
@@ -121,7 +117,7 @@ namespace jaq {
         }
       }
       else 
-	 return -98; // Make this obvious
+	 return -97; // Make this obvious
    }
 
    void port::unregister() {
