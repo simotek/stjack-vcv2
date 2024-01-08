@@ -100,6 +100,19 @@ In both cases the modules will simply do nothing. You may still name
 ports and hook them up, and those will work if loaded in to a Rack
 instance with a functioning JACK server.
 
+* Building the module from source
+
+ 1) Clone the VCV Rack sources locally `git clone https://github.com/VCVRack/Rack`
+ 2) Create a symlink to the repo at `/opt/rack`
+ 3) Build a copy of rack
+  a) Update Rack's submodules `cd /opt/rack` `git submodule update --init --recursive`
+  b) Build Rack's submodules `cd /opt/rack/dep` `make` (Unfortunately I had to uninstall pipewire
+     and reinstall jack to get this to work)
+  c) Build Rack itself, `cd /opt/rack` `make`
+ 3) In the stjack-vcv2 repo run `meson build` install anything that's missing until its succesful
+ 4) Compile the plugin `cd build` `ninja`
+ 5) Run `gen_package.sh` to create the .vcvplugin, this will appear in `dist`
+
 * Licenses and Credits
 
 ** Graphics
