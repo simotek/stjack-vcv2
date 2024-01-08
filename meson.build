@@ -1,6 +1,6 @@
-project('SkJack', 'c', 'cpp', version: '2.7.0~a')
+project('StkJack', 'c', 'cpp', version: '2.7.0')
 
-slug = 'SkJack'
+slug = 'StkJack'
 
 jack = dependency('jack', required: true)
 
