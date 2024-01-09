@@ -157,8 +157,6 @@ int on_jack_process(jack_nframes_t nframes, void *) {
 
 void init(Plugin *p) {
    ::plugin = p;
-   p->slug = TOSTRING(SLUG);
-   p->version = TOSTRING(VERSION);
 
    // Add all Models defined throughout the plugin
    p->addModel(jack_audio_model);
