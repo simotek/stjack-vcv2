@@ -1,4 +1,4 @@
-project('StkJack', 'c', 'cpp', version: '2.7.0')
+project('StkJack', 'c', 'cpp', version: '2.7.1')
 
 slug = 'StkJack'
 
